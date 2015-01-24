@@ -10,10 +10,10 @@
 (def headers->keywords {"Name" :name
                         "Glitter Index" :glitter-index})
 
-(defn fetch-names
-  [recs]
+(defn fetch-by-key
+  [recs key]
   (map (fn[rec]
-         (get rec :name))
+         (get rec key))
    recs))
 
 (defn str->int
@@ -64,5 +64,5 @@
   "I don't do a whole lot ... yet."
   [& args]
   ;;(println (glitter-filter 3 (mapify (parse (slurp filename)))))
-  (println (fetch-names [{:name "Charles" :glitter-index 5} {:name "Mandy" :glitter-index 10}]))
+  (println (fetch-by-key [{:name "Charles" :glitter-index 5} {:name "Mandy" :glitter-index 10}] :name))
   )
