@@ -26,6 +26,10 @@
   (map #(s/split % #",")
        (s/split string #"\n")))
 
+(defn prepend
+  [recs rec-to-add]
+  (conj (into () recs) rec-to-add))
+
 
 ;; CSV is all text, but we're storing numeric data. We want to convert
 ;; it back to actual numbers.
@@ -63,6 +67,7 @@
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
-  ;;(println (glitter-filter 3 (mapify (parse (slurp filename)))))
-  (println (fetch-by-key [{:name "Charles" :glitter-index 5} {:name "Mandy" :glitter-index 10}] :name))
+  ;;(println (fetch-by-key (glitter-filter 3 (mapify (parse (slurp filename)))) :name))
+  ;;(println (fetch-by-key [{:name "Charles" :glitter-index 5} {:name "Mandy" :glitter-index 10}] :name))
+  (println (prepend [{:name "Charles" :glitter-index 5} {:name "Mandy" :glitter-index 10}] {:name "Gilbert" :glitter-index 12}))
   )
