@@ -31,8 +31,8 @@
   (conj (into () recs) rec-to-add))
 
 (defn validate?
-  [rec-to-validate]
-  (and (contains? rec-to-validate :name) (contains? rec-to-validate :glitter-index))
+  [func-map rec-to-validate]
+
   )
 
 ;; CSV is all text, but we're storing numeric data. We want to convert
@@ -73,5 +73,7 @@
   [& args]
   ;;(println (fetch-by-key (glitter-filter 3 (mapify (parse (slurp filename)))) :name))
   ;;(println (fetch-by-key [{:name "Charles" :glitter-index 5} {:name "Mandy" :glitter-index 10}] :name))
-  (println (validate? {:name "Gilbert" :glitter-index 12}))
+  ;;(println ((get {:name #(contains? % :name) :glitter-index #(contains? % :glitter-index)} :glitter-index) {:nam "Gilbert" :glitter-inex 12}) )
+
+  (println (validate? {:name #(contains? % :name) :glitter-index #(contains? % :glitter-index)} {:name "Gilbert" :glitter-index "12"}))
   )
