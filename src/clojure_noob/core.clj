@@ -10,6 +10,12 @@
 (def headers->keywords {"Name" :name
                         "Glitter Index" :glitter-index})
 
+(defn fetch-names
+  [recs]
+  (map (fn[rec]
+         (get rec :name))
+   recs))
+
 (defn str->int
   [str]
   (Integer. str))
@@ -25,6 +31,11 @@
 ;; it back to actual numbers.
 (def conversions {:name identity
                   :glitter-index str->int})
+
+(defn glitter-filter
+  [minimum-glitter records]
+  (filter #(>= (:glitter-index %) minimum-glitter) records))
+
 
 (defn mapify
   "Return a seq of maps like {:name \"Edward Cullen\" :glitter-index 10}"
@@ -52,4 +63,6 @@
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
-  (println (mapify (parse (slurp filename)))))
+  ;;(println (glitter-filter 3 (mapify (parse (slurp filename)))))
+  (println (fetch-names [{:name "Charles" :glitter-index 5} {:name "Mandy" :glitter-index 10}]))
+  )
