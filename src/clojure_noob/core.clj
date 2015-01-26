@@ -76,6 +76,11 @@
                          unmapped-row)))
      unmapped-rows)))
 
+(defn to-csv
+  [rows]
+    (println rows)
+  )
+
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
@@ -84,5 +89,7 @@
   ;;(println ((get {:name #(contains? % :name) :glitter-index #(contains? % :glitter-index)} :glitter-index) {:nam "Gilbert" :glitter-inex 12}) )
 
   ;;(println (validate? {:name #(contains? % :name) :glitter-index #(contains? % :glitter-index)} {:name "Gilbert" :glitter-index "12"}))
-  (println (prepend [{:name "Gilbert" :glitter-inex 12} {:name "Stuff" :glitter-index 2}] {:name "Ooeey" :glitter-index 4}))
+  ;;(println (prepend [{:name "Gilbert" :glitter-inex 12} {:name "Stuff" :glitter-index 2}] {:name "Ooeey" :glitter-index 4}))
+  (println (to-csv [{:name "Gilbert" :glitter-index 12} {:name "Stuff" :glitter-index 2}]))
+
   )
