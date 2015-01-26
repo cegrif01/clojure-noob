@@ -26,21 +26,22 @@
   (map #(s/split % #",")
        (s/split string #"\n")))
 
-(defn prepend
-  [recs rec-to-add]
-  (if validate? rec-to-add
-    (conj (into () recs) rec-to-add)
-    (println "invalid record")))
-
 (defn validate?
   [func-map rec-to-validate]
   (let [status (map
                 (fn [func-key]((get func-map func-key) rec-to-validate))
                 (keys func-map))]
 
-               (reduce #(and %1 %2) status))
+               (reduce #(and %1 %2) status)))
 
-  )
+(def validation-map {:name #(contains? % :name) :glitter-index #(contains? % :glitter-index)})
+
+(defn prepend
+  [recs rec-to-add]
+  (if (validate? validation-map rec-to-add)
+      (conj (into () recs) rec-to-add)
+      (println "invalid record")))
+
 
 ;; CSV is all text, but we're storing numeric data. We want to convert
 ;; it back to actual numbers.
@@ -83,5 +84,5 @@
   ;;(println ((get {:name #(contains? % :name) :glitter-index #(contains? % :glitter-index)} :glitter-index) {:nam "Gilbert" :glitter-inex 12}) )
 
   ;;(println (validate? {:name #(contains? % :name) :glitter-index #(contains? % :glitter-index)} {:name "Gilbert" :glitter-index "12"}))
-  (println (prepend ({:name "Gilbert" :glitter-inex 12} {:name "Stuff" :glitter-index 2}) {:nam "Ooeey" :glitter-index 4}))
+  (println (prepend [{:name "Gilbert" :glitter-inex 12} {:name "Stuff" :glitter-index 2}] {:name "Ooeey" :glitter-index 4}))
   )
