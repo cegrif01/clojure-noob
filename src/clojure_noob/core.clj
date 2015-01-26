@@ -29,7 +29,7 @@
 (defn validate?
   [func-map rec-to-validate]
   (let [status (map
-                (fn [func-key]((get func-map func-key) rec-to-validate))
+                  (fn [func-key]((get func-map func-key) rec-to-validate))
                 (keys func-map))]
 
                (reduce #(and %1 %2) status)))
