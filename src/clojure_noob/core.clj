@@ -40,10 +40,10 @@
       [] )
 
 (defn amorization-interest-rate
-  [interest-rate]
-  (float (/ (/ interest-rate 12) 100)))
+  [interest-rate number-of-times-per-year]
+  (/ (/ interest-rate number-of-times-per-year) 100))
 
-(defn monthly-amorization-payment "Calculates the monthly payment"
+(defn monthly-amorization-payment-amount "Calculates the monthly payment"
   [initial-amount interest-rate number-of-payments]
   (let [monthly-payment (/ (* interest-rate initial-amount (Math/pow (+ 1 interest-rate) number-of-payments))
                            (- (Math/pow (+ 1 interest-rate) number-of-payments) 1))]
@@ -66,6 +66,6 @@
 
 ;;    (println (+ (/ 13462.41 60)))
 ;;    (println (/ (* 10769.93 (+ 1 (* (/ 5 100) 5))) 60) )
-    (println (monthly-amorization-payment 10769.93 (amorization-interest-rate 5) 60))
+    (println (monthly-amorization-payment-amount 10769.93 (amorization-interest-rate 5 12) 60))
 
   )
