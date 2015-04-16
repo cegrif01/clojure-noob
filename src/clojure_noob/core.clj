@@ -47,8 +47,15 @@
   [initial-amount interest-rate number-of-payments]
   (let [monthly-payment (/ (* interest-rate initial-amount (Math/pow (+ 1 interest-rate) number-of-payments))
                            (- (Math/pow (+ 1 interest-rate) number-of-payments) 1))]
-    monthly-payment
-    ));
+    monthly-payment));
+
+(defn interest-principle-breakdown "Determines how much of a monthly payment goes towards interest and towards the actual loan amount"
+  [monthly-payment interest-rate loan-balance]
+  (let [interest          (* loan-balance interest-rate)
+        principle         (- monthly-payment interest)
+        remaining-amount  (- loan-balance principle)]
+    {:amount-towards-interest interest, :amount-towards-principle principle, :remaining-amount remaining-amount}
+));
 
 (defn -main
   "I don't do a whole lot ... yet."
@@ -66,6 +73,9 @@
 
 ;;    (println (+ (/ 13462.41 60)))
 ;;    (println (/ (* 10769.93 (+ 1 (* (/ 5 100) 5))) 60) )
-    (println (monthly-amorization-payment-amount 10769.93 (amorization-interest-rate 5 12) 60))
 
-  )
+  (def interest (amorization-interest-rate 5 12))
+  (def monthly-payment (monthly-amorization-payment-amount 10769.93 (amorization-interest-rate 5 12) 60))
+  (println (interest-principle-breakdown monthly-payment interest 10769.93))
+
+)
