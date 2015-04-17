@@ -45,11 +45,11 @@
   "I don't do a whole lot ... yet."
   [& args]
 
-  (def interest (i/amorization-interest-rate 5 12))
-  (def monthly-payment (monthly-amorization-payment-amount 10769.93 interest 60))
+  ;;(def interest (i/amorization-interest-rate 5 12))
+  ;;(def monthly-payment (monthly-amorization-payment-amount 10769.93 interest 60))
   ;;(println (interest-principle-breakdown monthly-payment interest 10769.93))
-  (p/print-table (create-amorization-schedule 10769.93 monthly-payment interest))
+  ;;(p/print-table (create-amorization-schedule 10769.93 monthly-payment interest))
   ;;(println (i/simple-interest 10000 5 5))
-  (println (date-lib/now))
+  (println (macros/infix (9 + 1)))
 
 )
