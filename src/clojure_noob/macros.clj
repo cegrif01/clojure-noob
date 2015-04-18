@@ -12,7 +12,7 @@
   (cond (not (seq? form))
          form
         (= 1 (count form))
-        `(r-infix `(first form))
+        `(r-infix ~(first form))
         :else
         (let [operator  (second form)
               first-arg (first form)

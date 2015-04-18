@@ -22,10 +22,16 @@
       number-of-payments));
 
 
+;;(defn monthly-amorization-payment-amount "Calculates the monthly payment"
+;;  [initial-amount interest-rate number-of-payments]
+;;  (let [monthly-payment (/ (* interest-rate initial-amount (Math/pow (+ 1 interest-rate) number-of-payments))
+;;                           (- (Math/pow (+ 1 interest-rate) number-of-payments) 1))]
+;;    monthly-payment));
+
 (defn monthly-amorization-payment-amount "Calculates the monthly payment"
   [initial-amount interest-rate number-of-payments]
-  (let [monthly-payment (/ (* interest-rate initial-amount (Math/pow (+ 1 interest-rate) number-of-payments))
-                           (- (Math/pow (+ 1 interest-rate) number-of-payments) 1))]
+  (let [monthly-payment (macros/r-infix ((interest-rate * initial-amount * ((1 + interest-rate) Math/pow number-of-payments))
+                                        / (((1 + interest-rate) Math/pow number-of-payments) - 1)))]
     monthly-payment));
 
 
@@ -45,14 +51,15 @@
   "I don't do a whole lot ... yet."
   [& args]
 
-  ;;(def interest (i/amorization-interest-rate 5 12))
-  ;;(def monthly-payment (monthly-amorization-payment-amount 10769.93 interest 60))
-  ;;(println (interest-principle-breakdown monthly-payment interest 10769.93))
-  ;;(p/print-table (create-amorization-schedule 10769.93 monthly-payment interest))
+  (def interest (i/amorization-interest-rate 5 12))
+  (def monthly-payment (monthly-amorization-payment-amount 10769.93 interest 60))
+ ;; (p/print-table (create-amorization-schedule 10769.93 monthly-payment interest))
+
+  (println monthly-payment)
   ;;(println (i/simple-interest 10000 5 5))
 ;;  (println (= (+ 9 1) (macros/infix (9 + 1))))
 
 ;;  (println (macroexpand `(infix-better (9 + 1))))
 
-  (println (macros/r-infix (10 + (2 * 3) + (4 * 5))))
+;;  (println (macros/r-infix (10 + (2 * 3) + (4 * 5))))
   )
