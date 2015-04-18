@@ -50,6 +50,9 @@
   ;;(println (interest-principle-breakdown monthly-payment interest 10769.93))
   ;;(p/print-table (create-amorization-schedule 10769.93 monthly-payment interest))
   ;;(println (i/simple-interest 10000 5 5))
-  (println (macros/infix (9 + 1)))
+;;  (println (= (+ 9 1) (macros/infix (9 + 1))))
 
-)
+;;  (println (macroexpand `(infix-better (9 + 1))))
+
+  (println (macros/r-infix (10 + (2 * 3) + (4 * 5))))
+  )
