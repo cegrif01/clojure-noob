@@ -5,7 +5,8 @@
   (:require [clojure.pprint :as p])
   (:require [clojure-noob.interest :as i])
   (:require [clojure-noob.DateLib :as date-lib])
-  (:require [clojure-noob.macros :as macros]))
+  (:require [clojure-noob.macros :as macros])
+  (:require [clojure.java.io :as io]))
 
 
 (defn parse
@@ -47,6 +48,11 @@
           (recur new-amount new-schedule)))));
 
 
+(defn read-file
+  "Read a resource into a string"
+  [path]
+  (-> path io/file slurp))
+
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
@@ -55,11 +61,13 @@
   (def monthly-payment (monthly-amorization-payment-amount 10769.93 interest 60))
  ;; (p/print-table (create-amorization-schedule 10769.93 monthly-payment interest))
 
-  (println monthly-payment)
+  ;;(println monthly-payment)
   ;;(println (i/simple-interest 10000 5 5))
 ;;  (println (= (+ 9 1) (macros/infix (9 + 1))))
 
 ;;  (println (macroexpand `(infix-better (9 + 1))))
 
 ;;  (println (macros/r-infix (10 + (2 * 3) + (4 * 5))))
+;;  (println (macros/ignore-last-operand (+ 1 2 10)))
+  (println (read-file "suspects.csv"))
   )

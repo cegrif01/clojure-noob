@@ -20,3 +20,7 @@
              `(~operator
                (r-infix ~first-arg)
                (r-infix ~others)))))
+
+(defmacro ignore-last-operand
+  [function-call]
+  (butlast function-call))
