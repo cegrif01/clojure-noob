@@ -15,10 +15,10 @@
   (map #(s/split % #",")
        (s/split string #"\n")))
 
-(def headers->keywords {"Amount towards interest" :amount-towards-interest
-                        "Amount towards principle" :amount-towards-principle
-                        "Remaining Amount" :remaining-amount})
 
+(def header->keys {:amount-towards-interest  "Amount towards interest"
+                        :amount-towards-principle "Amount towards principle"
+                        :remaining-amount         "Remaining Amount" })
 
 (defn make-payment-schedule "From the given payment information, starting date of loan, loan length, it will generate a monthly payment schedule"
     [principle interest-rate times-compounded-per-year loan-length]
@@ -46,22 +46,19 @@
           (recur new-amount new-schedule)))));
 
 (defn to-csv-string
-  [entry]
+  [row]
+  (str (s/join ", " row) "\n"))
 
-  (let
-    [headers      (keys entry)
-     data-entry   (map  entry headers)
-     csv          (str (s/join ", " data-entry) "\n")]
-    csv))
 
 (defn to-csv "converts a vector of maps into a comma seperated string"
   [data]
 
-  (let [body   (apply str (map to-csv-string data))
-        header (str (s/join ", " (keys (first data))))
+  (let [map-keys     (keys (first data))
+        data-values  (map vals data)
+        body   (apply str (map to-csv-string data-values))
+        header (str (s/join ", " (map header->keys map-keys)))
         combined (str header "\n" body)]
-combined)
-  )
+    combined))
 
 
 (defn read-file
