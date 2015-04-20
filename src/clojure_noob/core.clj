@@ -45,19 +45,18 @@
               new-schedule  (conj schedule breakdown)]
           (recur new-amount new-schedule)))));
 
-(defn to-csv-string
-  [row]
-  (str (s/join ", " row) "\n"))
-
+(defn write-file [file-name data]
+  (with-open [w (io/writer file-name :append true)]
+    (.write w data)))
 
 (defn to-csv "converts a vector of maps into a comma seperated string"
   [data]
 
   (let [map-keys     (keys (first data))
         data-values  (map vals data)
-        body   (apply str (map to-csv-string data-values))
-        header (str (s/join ", " (map header->keys map-keys)))
-        combined (str header "\n" body)]
+        body         (apply str (map #(str (s/join ", " %) "\n") data-values))
+        header       (str (s/join ", " (map header->keys map-keys)))
+        combined     (str header "\n" body)]
     combined))
 
 
@@ -72,6 +71,9 @@
 
   (def interest (i/amorization-interest-rate 5 12))
   (def monthly-payment (monthly-amorization-payment-amount 10769.93 interest 60))
-  (print (to-csv (create-amorization-schedule 10769.93 monthly-payment interest)))
+  (def schedule (to-csv (create-amorization-schedule 10769.93 monthly-payment interest)))
+  (println (to-csv [{:tuna 5 :oregeno 10} {:tuna 15 :oregeno 8}]))
+
+;;  (write-file "suspects.csv" schedule)
 
   )
