@@ -15,6 +15,10 @@
   (map #(s/split % #",")
        (s/split string #"\n")))
 
+(def headers->keywords {"Amount towards interest" :amount-towards-interest
+                        "Amount towards principle" :amount-towards-principle
+                        "Remaining Amount" :remaining-amount})
+
 
 (defn make-payment-schedule "From the given payment information, starting date of loan, loan length, it will generate a monthly payment schedule"
     [principle interest-rate times-compounded-per-year loan-length]
@@ -22,12 +26,6 @@
           number-of-payments     (* loan-length times-compounded-per-year)]
       number-of-payments));
 
-
-;;(defn monthly-amorization-payment-amount "Calculates the monthly payment"
-;;  [initial-amount interest-rate number-of-payments]
-;;  (let [monthly-payment (/ (* interest-rate initial-amount (Math/pow (+ 1 interest-rate) number-of-payments))
-;;                           (- (Math/pow (+ 1 interest-rate) number-of-payments) 1))]
-;;    monthly-payment));
 
 (defn monthly-amorization-payment-amount "Calculates the monthly payment"
   [initial-amount interest-rate number-of-payments]
@@ -47,6 +45,24 @@
               new-schedule  (conj schedule breakdown)]
           (recur new-amount new-schedule)))));
 
+(defn to-csv-string
+  [entry]
+
+  (let
+    [headers      (keys entry)
+     data-entry   (map  entry headers)
+     csv          (str (s/join ", " data-entry) "\n")]
+    csv))
+
+(defn to-csv "converts a vector of maps into a comma seperated string"
+  [data]
+
+  (let [body   (apply str (map to-csv-string data))
+        header (str (s/join ", " (keys (first data))))
+        combined (str header "\n" body)]
+combined)
+  )
+
 
 (defn read-file
   "Read a resource into a string"
@@ -59,15 +75,6 @@
 
   (def interest (i/amorization-interest-rate 5 12))
   (def monthly-payment (monthly-amorization-payment-amount 10769.93 interest 60))
- ;; (p/print-table (create-amorization-schedule 10769.93 monthly-payment interest))
+  (print (to-csv (create-amorization-schedule 10769.93 monthly-payment interest)))
 
-  ;;(println monthly-payment)
-  ;;(println (i/simple-interest 10000 5 5))
-;;  (println (= (+ 9 1) (macros/infix (9 + 1))))
-
-;;  (println (macroexpand `(infix-better (9 + 1))))
-
-;;  (println (macros/r-infix (10 + (2 * 3) + (4 * 5))))
-;;  (println (macros/ignore-last-operand (+ 1 2 10)))
-  (println (read-file "suspects.csv"))
   )
