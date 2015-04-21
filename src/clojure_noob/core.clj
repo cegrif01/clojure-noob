@@ -8,33 +8,25 @@
   (:require [clojure-noob.schedule :as schedule]))
 
 
-(def header->keys {:amount-towards-interest  "Amount towards interest"
+(def header->keys {:payment-num              "Payment Number"
+                   :amount-towards-interest  "Amount towards interest"
                    :amount-towards-principle "Amount towards principle"
                    :remaining-amount         "Remaining Amount" })
 
 (defn -main
-  "I don't do a whole lot ... yet."
+  "Takes in loan information and creates an amorization schedule"
   [& args]
-
-  ;;(def interest (i/amorization-interest-rate 5 12))
-  ;;(def monthly-payment (schedule/monthly-amorization-payment-amount 10769.93 interest 60))
-;;  (def schedule (utils/to-csv (schedule/create-amorization-schedule 10769.93 monthly-payment interest) header->keys))
-
-  ;;(println schedule)
-;;  (write-file "suspects.csv" schedule)
 
   (println "Please type in loan amount")
   (def loan-amount (utils/str->int (read-line)))
 
   (println "Please type in interest rate as a percentage")
-  (def interest-rate (utils/str->int (read-line)))
+  (def interest-rate (i/amorization-interest-rate (utils/str->int (read-line)) 12))
 
   (println "Please type in the loan term in years")
   (def loan-term (utils/str->int (read-line)))
 
-  (def interest-rate (i/amorization-interest-rate interest-rate 12))
-;;  (def interest-rate (i/amorization-interest-rate interest-rate 12))
-
-  (println interest-rate)
-
-  )
+  (def monthly-payment (schedule/monthly-amorization-payment-amount loan-amount interest-rate (* 12 loan-term)))
+  (def schedule (utils/to-csv (schedule/create-amorization-schedule loan-amount monthly-payment interest-rate) header->keys))
+  (println schedule)
+)
