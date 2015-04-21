@@ -1,4 +1,4 @@
-(ns clojure-noob.DateLib)
+(ns clojure-noob.date_lib)
 
 (defn now
       "Returns the current epoch time"
