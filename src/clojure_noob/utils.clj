@@ -3,6 +3,10 @@
     (:require [clojure.string :as s])
   )
 
+(defn str->int
+  [str]
+  (Integer. str))
+
 (defn parse
   "Convert a csv into rows of columns"
   [string]
