@@ -14,6 +14,6 @@
     {:total total-amount :interest interest :principle principle :loan-length period}));
 
 
-(defn amorization-interest-rate
+(defn amortization-interest-rate
   [interest-rate number-of-times-per-year]
   (/ (/ interest-rate number-of-times-per-year) 100))

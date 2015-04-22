@@ -13,20 +13,36 @@
                    :amount-towards-principle "Amount towards principle"
                    :remaining-amount         "Remaining Amount" })
 
+(defn generate-schedule
+  [loan-amount interest-rate loan-term number-of-payments-per-month csv?]
+  (let [num-of-pmts-per-year       (* number-of-payments-per-month 12)
+        amort-interest-rate        (i/amortization-interest-rate interest-rate num-of-pmts-per-year)
+        recurring-amount           (schedule/recurring-amortization-payment loan-amount amort-interest-rate (* num-of-pmts-per-year loan-term))
+        schedule                   (schedule/create-amortization-schedule loan-amount recurring-amount amort-interest-rate)
+        schedule->to-csv           (utils/to-csv schedule header->keys)]
+        (if csv?
+          schedule->to-csv
+          schedule)
+    ))
+
 (defn -main
   "Takes in loan information and creates an amorization schedule"
   [& args]
 
-  (println "Please type in loan amount")
-  (def loan-amount (utils/str->int (read-line)))
+;;   (println "Please type in loan amount")
+;;   (def loan-amount (utils/str->int (read-line)))
 
-  (println "Please type in interest rate as a percentage")
-  (def interest-rate (i/amorization-interest-rate (utils/str->int (read-line)) 12))
+;;   (println "Please type in interest rate as a percentage")
+;;   (def interest-rate (utils/str->int (read-line)))
 
-  (println "Please type in the loan term in years")
-  (def loan-term (utils/str->int (read-line)))
+;;   (println "Please type in the loan term in years")
+;;   (def loan-term (utils/str->int (read-line)))
 
-  (def monthly-payment (schedule/monthly-amorization-payment-amount loan-amount interest-rate (* 12 loan-term)))
-  (def schedule (utils/to-csv (schedule/create-amorization-schedule loan-amount monthly-payment interest-rate) header->keys))
-  (println schedule)
+;;   (println "Number of payments per month")
+;;   (def number-of-payments-per-month (utils/str->int (read-line)))
+
+
+  (def schedule (generate-schedule 10769 5 5 2 false))
+
+;;  (println (generate-schedule loan-amount interest-rate loan-term number-of-payments-per-month))
 )

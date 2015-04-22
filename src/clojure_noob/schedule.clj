@@ -10,7 +10,7 @@
     {:amount-towards-interest interest, :amount-towards-principle principle, :remaining-amount remaining-amount}
 ));
 
-(defn create-amorization-schedule "returns a map of the break down of each payment. This breakdown will include the amount remaining on principle and how much of your payment went towards interest"
+(defn create-amortization-schedule "returns a map of the break down of each payment. This breakdown will include the amount remaining on principle and how much of your payment went towards interest"
     [loan-amount monthly-payment interest]
     (loop [amount       loan-amount
            schedule     []
@@ -22,8 +22,8 @@
               new-schedule  (conj schedule breakdown)]
           (recur new-amount new-schedule (inc payment-num))))));
 
-(defn monthly-amorization-payment-amount "Calculates the monthly payment"
-  [initial-amount interest-rate number-of-payments]
-  (let [monthly-payment (macros/r-infix ((interest-rate * initial-amount * ((1 + interest-rate) Math/pow number-of-payments))
-                                        / (((1 + interest-rate) Math/pow number-of-payments) - 1)))]
+(defn recurring-amortization-payment "Calculates the recurring payment amount"
+  [initial-amount amort-interest-rate number-of-payments]
+  (let [monthly-payment (macros/r-infix ((amort-interest-rate * initial-amount * ((1 + amort-interest-rate) Math/pow number-of-payments))
+                                        / (((1 + amort-interest-rate) Math/pow number-of-payments) - 1)))]
     monthly-payment));
