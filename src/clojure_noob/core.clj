@@ -29,20 +29,17 @@
   "Takes in loan information and creates an amorization schedule"
   [& args]
 
-;;   (println "Please type in loan amount")
-;;   (def loan-amount (utils/str->int (read-line)))
+  (println "Please type in loan amount")
+  (def loan-amount (utils/str->int (read-line)))
 
-;;   (println "Please type in interest rate as a percentage")
-;;   (def interest-rate (utils/str->int (read-line)))
+  (println "Please type in interest rate as a percentage")
+  (def interest-rate (utils/str->int (read-line)))
 
-;;   (println "Please type in the loan term in years")
-;;   (def loan-term (utils/str->int (read-line)))
+  (println "Please type in the loan term in years")
+  (def loan-term (utils/str->int (read-line)))
 
-;;   (println "Number of payments per month")
-;;   (def number-of-payments-per-month (utils/str->int (read-line)))
+  (println "Number of payments per month")
+  (def number-of-payments-per-month (utils/str->int (read-line)))
 
-
-  (def schedule (generate-schedule 10769 5 5 2 false))
-
-;;  (println (generate-schedule loan-amount interest-rate loan-term number-of-payments-per-month))
+  (println (generate-schedule loan-amount interest-rate loan-term number-of-payments-per-month true))
 )
