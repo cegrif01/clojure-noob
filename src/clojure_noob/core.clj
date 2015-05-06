@@ -2,7 +2,6 @@
 (ns clojure-noob.core
   ;; We haven't gone over require but we will.
   (:require [clojure.pprint :as p])
-  (:require [clojure-noob.interest :as i])
   (:require [clojure-noob.date_lib :as date-lib])
   (:require [clojure-noob.utils :as utils])
   (:require [clojure-noob.schedule :as schedule]))
@@ -16,7 +15,7 @@
 (defn generate-schedule
   [loan-amount interest-rate loan-term number-of-payments-per-month csv?]
   (let [num-of-pmts-per-year       (* number-of-payments-per-month 12)
-        amort-interest-rate        (i/amortization-interest-rate interest-rate num-of-pmts-per-year)
+        amort-interest-rate        (schedule/amortization-interest-rate interest-rate num-of-pmts-per-year)
         recurring-amount           (schedule/recurring-amortization-payment loan-amount amort-interest-rate (* num-of-pmts-per-year loan-term))
         schedule                   (schedule/create-amortization-schedule loan-amount recurring-amount amort-interest-rate)
         schedule->to-csv           (utils/to-csv schedule header->keys)]

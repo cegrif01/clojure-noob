@@ -1,6 +1,9 @@
 (ns clojure-noob.schedule
-  (:require [clojure-noob.interest :as i])
   (:require [clojure-noob.macros :as macros]))
+
+(defn amortization-interest-rate
+  [interest-rate number-of-times-per-year]
+  (/ (/ interest-rate number-of-times-per-year) 100))
 
 (defn interest-principle-breakdown "Determines how much of a monthly payment goes towards interest and towards the actual loan amount"
   [monthly-payment interest-rate loan-balance]
@@ -11,13 +14,13 @@
 ));
 
 (defn create-amortization-schedule "returns a map of the break down of each payment. This breakdown will include the amount remaining on principle and how much of your payment went towards interest"
-    [loan-amount monthly-payment interest]
+    [loan-amount ly-payment interest]
     (loop [amount       loan-amount
            schedule     []
            payment-num  1]
       (if (< amount 0)
         schedule
-        (let [breakdown     (assoc (interest-principle-breakdown monthly-payment interest amount) :payment-num payment-num)
+        (let [breakdown     (assoc (interest-principle-breakdown ly-payment interest amount) :payment-num payment-num)
               new-amount    (breakdown :remaining-amount)
               new-schedule  (conj schedule breakdown)]
           (recur new-amount new-schedule (inc payment-num))))));

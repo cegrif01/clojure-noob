@@ -1,12 +1,5 @@
 (ns clojure-noob.macros)
 
-(defmacro infix [form]
-  (list (second form) (first form) (nth form 2)))
-
-(defmacro infix-better [form]
-  ( ~(second form)
-    ~(first form)
-    ~(nth form 2)))
 
 (defmacro r-infix [form]
   (cond (not (seq? form))
@@ -20,7 +13,3 @@
              `(~operator
                (r-infix ~first-arg)
                (r-infix ~others)))))
-
-(defmacro ignore-last-operand
-  [function-call]
-  (butlast function-call))
