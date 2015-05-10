@@ -1,0 +1,21 @@
+;; Anything you type in here will be executed
+;; immediately with the results shown on the
+;; right.
+  (def s "Hello World\nHello CodeEval")
+  (def split-up-words (clojure.string/split s #"\n"))
+
+split-up-words
+
+(defn split-by-space
+  [x]
+  (map #(clojure.string/split % #"\s") x))
+
+(split-by-space split-up-words)
+
+(defn reverse-order
+  [sentence]
+  (let [first-word     (first sentence)
+        rest-of-words  (rest sentence)]
+    (println first-word))
+
+ (reverse-order '(["Hello" "World"] ["Hello" "CodeEval"]))

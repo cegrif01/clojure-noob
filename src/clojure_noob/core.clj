@@ -2,43 +2,57 @@
 (ns clojure-noob.core
   ;; We haven't gone over require but we will.
   (:require [clojure.pprint :as p])
+  (:require [clojure.string :as str])
   (:require [clojure-noob.date_lib :as date-lib])
   (:require [clojure-noob.utils :as utils])
   (:require [clojure-noob.schedule :as schedule]))
 
+  (defn reverse-word-order
+    [line]
+    (str/split line #"\n")
+    )
 
-(def header->keys {:payment-num              "Payment Number"
-                   :amount-towards-interest  "Amount towards interest"
-                   :amount-towards-principle "Amount towards principle"
-                   :remaining-amount         "Remaining Amount" })
+;;     (def s "Hello World\nHello CodeEval")
+;;   (def split-up-words (clojure.string/split s #"\n"))
 
-(defn generate-schedule
-  [loan-amount interest-rate loan-term number-of-payments-per-month csv?]
-  (let [num-of-pmts-per-year       (* number-of-payments-per-month 12)
-        amort-interest-rate        (schedule/amortization-interest-rate interest-rate num-of-pmts-per-year)
-        recurring-amount           (schedule/recurring-amortization-payment loan-amount amort-interest-rate (* num-of-pmts-per-year loan-term))
-        schedule                   (schedule/create-amortization-schedule loan-amount recurring-amount amort-interest-rate)
-        schedule->to-csv           (utils/to-csv schedule header->keys)]
-        (if csv?
-          schedule->to-csv
-          schedule)
-    ))
+;; split-up-words
+
+;; (defn split-by-space
+;;   [x]
+;;   (map #(clojure.string/split % #"\s") x))
+
+;; (split-by-space split-up-words)
+
+(defn reverse-order
+  [sentence]
+  (loop [first-word     (first sentence)
+         rest-of-words  (rest sentence)
+         rev-vector     []]
+
+        (flatten (conj rev-vector rest-of-words first-word))
+;;       (if (empty? rest-of-words)
+;;         rev-vector
+;;         (recur (flatten (conj rev-vector rest-of-words first-word)))))))
+
+  ))
+
+
 
 (defn -main
   "Takes in loan information and creates an amorization schedule"
   [& args]
 
-  (println "Please type in loan amount")
-  (def loan-amount (utils/str->int (read-line)))
+;;    (println "Place type in name of file")
+;;    (def file (read-line))
 
-  (println "Please type in interest rate as a percentage")
-  (def interest-rate (utils/str->int (read-line)))
+;;   ;;   ; Sample code to read in test cases:
+;;   ;;   ; Open the file passed as the first command line argument
+;;   (with-open [rdr (clojure.java.io/reader file)]
+;;   ; Read each line ignoring empty ones
+;;   (doseq [line (remove empty? (line-seq rdr))]
+;;     (println (reverse-word-order line))))
 
-  (println "Please type in the loan term in years")
-  (def loan-term (utils/str->int (read-line)))
+ (println (map reverse-order '(["Hot" "Damn" "Cheese"] ["Hello" "CodeEval"])))
 
-  (println "Number of payments per month")
-  (def number-of-payments-per-month (utils/str->int (read-line)))
-
-  (println (generate-schedule loan-amount interest-rate loan-term number-of-payments-per-month true))
+;; (apply str (map #(str (s/join ", " %) "\n") data-values))
 )
