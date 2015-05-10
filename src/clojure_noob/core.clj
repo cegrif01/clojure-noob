@@ -2,10 +2,7 @@
 (ns clojure-noob.core
   ;; We haven't gone over require but we will.
   (:require [clojure.pprint :as p])
-  (:require [clojure.string :as str])
-  (:require [clojure-noob.date_lib :as date-lib])
-  (:require [clojure-noob.utils :as utils])
-  (:require [clojure-noob.schedule :as schedule]))
+  (:require [clojure.string :as str]))
 
   (defn reverse-word-order
     [line]
@@ -23,18 +20,6 @@
 
 ;; (split-by-space split-up-words)
 
-(defn reverse-order
-  [sentence]
-  (loop [first-word     (first sentence)
-         rest-of-words  (rest sentence)
-         rev-vector     []]
-
-        (flatten (conj rev-vector rest-of-words first-word))
-;;       (if (empty? rest-of-words)
-;;         rev-vector
-;;         (recur (flatten (conj rev-vector rest-of-words first-word)))))))
-
-  ))
 
 
 
@@ -52,7 +37,9 @@
 ;;   (doseq [line (remove empty? (line-seq rdr))]
 ;;     (println (reverse-word-order line))))
 
- (println (map reverse-order '(["Hot" "Damn" "Cheese"] ["Hello" "CodeEval"])))
+   (def lines '(["Hot" "Damn" "Cheese"] ["Hello" "CodeEval"]))
+
+   (println (map #(sort-by last %) lines))
 
 ;; (apply str (map #(str (s/join ", " %) "\n") data-values))
 )
