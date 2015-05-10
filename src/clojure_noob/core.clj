@@ -1,4 +1,5 @@
-(ns clojure_noob.core)
+(ns clojure-noob.core
+  (:gen-class))
 
   (defn split-by-space
     [coll]
@@ -18,4 +19,7 @@
     (with-open [rdr (clojure.java.io/reader (first *command-line-args*))]
     ; Read each line ignoring empty ones
     (doseq [line (remove empty? (line-seq rdr))]
-      (println (to-sentence (rseq (split-by-space line)))))))
+      (println (to-sentence (rseq (split-by-space line))))))
+
+
+    )
